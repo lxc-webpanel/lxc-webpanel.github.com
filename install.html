@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>LXC Web Panel</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<!-- Le styles -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<style type="text/css">
+			body {
+				padding-top: 20px;
+				padding-bottom: 40px;
+			}
+
+			/* Custom container */
+			.container-narrow {
+				margin: 0 auto;
+				max-width: 700px;
+			}
+			.container-narrow > hr {
+				margin: 30px 0;
+			}
+		</style>
+		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+		<!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="favicon.ico">
+	</head>
+
+	<body>
+
+		<div class="container-narrow">
+
+			<div class="masthead">
+				<ul class="nav nav-pills pull-right">
+					<li><a href="index.html">Home</a></li>
+					<li class="active"><a href="install.html">Get started</a></li>
+					<li><a href="features.html">Features</a></li>
+					<li><a href="faq.html">FAQ</a></li>
+					<li><a href="screenshots.html">Screenshots</a></li>
+					<li><a href="about.html">About</a></li>
+				</ul>
+				<h3 class="muted">LXC Web Panel</h3>
+			</div>
+
+			<hr>
+
+			<div class="row-fluid">
+				<h4>Requirements</h4>
+				<a href="http://github.com/lxc-webpanel/LXC-Web-Panel" class="btn btn-success pull-right">GitHub repository</a>
+				<ul>
+					<li>Ubuntu 12.04 or higher</li>
+					<li>LXC 0.8 or higher</li>
+					<li><code>/var/lib/lxc</code> as LXC root path</li>
+				</ul>
+
+				<hr>
+
+				<dl>
+					<dt><h4>Automatic installation</h4></dt>
+					<dd>Copy/past the following code to your server</dd>
+					<dd><pre>wget http://lxc-webpanel.github.com/tools/install.sh -O - | bash</pre></dd>
+					<dd>Connect you on http://<em>your_ip_address</em>:5000/</dd>
+					<dd>Login with user <em>admin</em> and password <em>admin</em></dd>
+					
+				</dl>
+
+				<br />
+
+				<dl>
+					<dt><h4>Manual installation</h4></dt>
+					<dd>Clone our repository</dd>
+					<dd><pre>git clone https://github.com/lxc-webpanel/LXC-Web-Panel.git</pre></dd>
+					<dd>Install Flask</dd>
+
+					<dd><pre>pip install flask==0.9</pre></dd>
+
+					<dd>Install Python SQLite3</dd>
+					<dd><pre>pip install sqlite3</pre></dd>
+
+					<dd>Run LXC Web Panel</dd>
+					<dd><pre>python lwp.py</pre></dd>
+
+					<dd>Connect you on http://<em>your_ip_address</em>:5000/</dd>
+					<dd>Login with user <em>admin</em> and password <em>admin</em></dd>
+					
+				</dl>
+
+			</div>
+
+			<hr>
+
+			<div class="footer">
+				<p class="muted">&copy; LXC Web Panel 2013 - MIT License</p>
+			</div>
+
+		</div>
+	</body>
+</html>
