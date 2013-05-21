@@ -40,11 +40,6 @@ python -c 'import flask' &> /dev/null || {
 	pip install flask==0.9 2> /dev/null
 }
 
-python -c 'import sqlite3' &> /dev/null || {
-	echo '| + SQLite3 Python...'
-	pip install sqlite3 2> /dev/null
-}
-
 echo 'Cloning LXC Web Panel...'
 hash git &> /dev/null || {
 	echo '+ Installing Git'
