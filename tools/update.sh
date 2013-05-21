@@ -20,13 +20,13 @@ if [[ -d "$INSTALL_DIR" && $(< $INSTALL_DIR/version) == '0.1' ]]; then
 
 	/etc/init.d/lwp stop
 
-	tmp=$(mktmp)
+	tmp=$(mktemp -d)
 
 	echo 'Backuping database...'
 	[[ -f "$INSTALL_DIR/lwp.db" ]] && cp "$INSTALL_DIR/lwp.db" "$tmp" || echo "Can't backup the database!"
 
 	echo 'Removing old version...'
-	rm -rf "$INSTALL_DIR/*" "$INSTALL_DIR/.*"
+	rm -rf $INSTALL_DIR/* $INSTALL_DIR/.* &> /dev/null
 
 	echo 'Installing LXC Web Panel v0.2...'
 	git clone https://github.com/lxc-webpanel/LXC-Web-Panel.git "$INSTALL_DIR"
