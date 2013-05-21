@@ -18,7 +18,7 @@ INSTALL_DIR='/srv/lwp'
 
 if [[ -d "$INSTALL_DIR" ]];then
 	echo "You already have LXC Web Panel installed. You'll need to remove $INSTALL_DIR if you want to install"
-	exit
+	exit 1
 fi
 
 echo 'Installing requirement...'
@@ -53,13 +53,12 @@ hash git &> /dev/null || {
 
 git clone https://github.com/lxc-webpanel/LXC-Web-Panel.git "$INSTALL_DIR"
 
-echo -e '\nInstallation complete !\n\n'
+echo -e '\nInstallation complete!\n\n'
 
-read -p 'Would you want to add LXC Web Panel to init.d for auto start ? [Y/n] ' CONFIRM
 
-if [[ "$CONFIRM" =~ ^([yY][eE][sS]|[yY]|'')$ ]]; then
-	echo 'Adding /etc/init.d/lwp...'
-	cat > '/etc/init.d/lwp' <<EOF
+echo 'Adding /etc/init.d/lwp...'
+
+cat > '/etc/init.d/lwp' <<EOF
 #!/bin/bash
 # Copyright (c) 2013 LXC Web Panel
 # All rights reserved.
@@ -115,16 +114,15 @@ case "\$1" in
 		;;
 	*)
 		echo 'Usage: /etc/init.d/lwp {start|stop|restart}'
-		echo 'Do not use service for this please !'
 		exit 0
 		;;
 esac
 
 exit 0
 EOF
-	chmod +x '/etc/init.d/lwp'
-	update-rc.d lwp defaults &> /dev/null
-	echo 'Done'
-	/etc/init.d/lwp start
-	echo 'Connect you on http://your-ip-address:5000/'
-fi
+
+chmod +x '/etc/init.d/lwp'
+update-rc.d lwp defaults &> /dev/null
+echo 'Done'
+/etc/init.d/lwp start
+echo 'Connect you on http://your-ip-address:5000/'
