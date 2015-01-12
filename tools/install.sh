@@ -116,6 +116,7 @@ esac
 exit 0
 EOF
 
+mkdir -p /etc/lxc/auto
 chmod +x '/etc/init.d/lwp'
 update-rc.d lwp defaults &> /dev/null
 echo 'Done'
