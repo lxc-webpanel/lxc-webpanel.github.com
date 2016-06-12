@@ -46,6 +46,15 @@ hash git &> /dev/null || {
 	apt-get install -y git > /dev/null
 }
 
+echo 'Mounting cgroup...'
+# otherwise created container won't start, and there will be 
+# no error message shown
+LINE="none        /cgroup        cgroup        defaults    0    0"
+FILE=/etc/fstab
+grep -q "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+mkdir -p /cgroup
+mount /cgroup
+
 git clone -b 0.2 https://github.com/lxc-webpanel/LXC-Web-Panel.git "$INSTALL_DIR"
 
 echo -e '\nInstallation complete!\n\n'
