@@ -1,0 +1,775 @@
+{
+    "basePath": "/",
+    "consumes": [
+        "application/json"
+    ],
+    "definitions": {
+        "AbilitiesModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/AbilitiesModelPut"
+                },
+                {
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "AbilitiesModelPut": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/GroupsModelPut"
+                },
+                {
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "GroupsModelPost": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/GroupsModelPut"
+                },
+                {
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name"
+                    ],
+                    "type": "object"
+                }
+            ]
+        },
+        "GroupsModelPut": {
+            "properties": {
+                "abilities": {
+                    "items": {
+                        "minimum": 1,
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "UsersModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/UsersModelPut"
+                },
+                {
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "UsersModelPost": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/UsersModelPut"
+                },
+                {
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        },
+                        "roles": {
+                            "items": {
+                                "minimum": 1,
+                                "type": "integer"
+                            },
+                            "type": "array"
+                        },
+                        "username": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "password",
+                        "roles",
+                        "username"
+                    ],
+                    "type": "object"
+                }
+            ]
+        },
+        "UsersModelPut": {
+            "properties": {
+                "containers": {
+                    "items": {
+                        "minimum": 1,
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "roles": {
+                    "items": {
+                        "minimum": 1,
+                        "type": "integer"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "info": {
+        "description": "https://github.com/",
+        "title": "LXC Web Panel API documentation",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/lwp/abilities": {
+            "get": {
+                "operationId": "get_abilities_list",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/AbilitiesModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            }
+        },
+        "/api/v1/lwp/groups": {
+            "get": {
+                "operationId": "get_groups_list",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GroupsModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            },
+            "post": {
+                "operationId": "post_groups_list",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GroupsModelPost"
+                        }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UsersModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            }
+        },
+        "/api/v1/lwp/groups/{id}": {
+            "delete": {
+                "operationId": "delete_groups",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            },
+            "get": {
+                "operationId": "get_groups",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UsersModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "put": {
+                "operationId": "put_groups",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GroupsModelPut"
+                        }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UsersModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            }
+        },
+        "/api/v1/lwp/host": {
+            "get": {
+                "operationId": "get_host_stats",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            }
+        },
+        "/api/v1/lwp/host/reboot": {
+            "post": {
+                "operationId": "post_host_reboot",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            }
+        },
+        "/api/v1/lwp/me": {
+            "delete": {
+                "operationId": "delete_me",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            },
+            "get": {
+                "operationId": "get_me",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UsersModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            },
+            "put": {
+                "operationId": "put_me",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UsersModelPut"
+                        }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UsersModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            }
+        },
+        "/api/v1/lwp/users": {
+            "get": {
+                "operationId": "get_users_list",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UsersModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            },
+            "post": {
+                "operationId": "post_users_list",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UsersModelPost"
+                        }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UsersModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            }
+        },
+        "/api/v1/lwp/users/{id}": {
+            "delete": {
+                "operationId": "delete_users",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            },
+            "get": {
+                "operationId": "get_users",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UsersModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "put": {
+                "operationId": "put_users",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UsersModelPut"
+                        }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UsersModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            }
+        },
+        "/api/v1/lxc/checkconfig": {
+            "get": {
+                "operationId": "get_lxc_check_config",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            }
+        },
+        "/api/v1/lxc/containers": {
+            "get": {
+                "operationId": "get_containers_list",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            },
+            "post": {
+                "operationId": "post_containers_list",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            }
+        },
+        "/api/v1/lxc/containers/{container}": {
+            "delete": {
+                "operationId": "delete_containers",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            },
+            "get": {
+                "operationId": "get_containers",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "container",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "put": {
+                "operationId": "put_containers",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            }
+        },
+        "/api/v1/lxc/containers/{container}/freeze": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "container",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "operationId": "post_containers_freeze",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            }
+        },
+        "/api/v1/lxc/containers/{container}/restart": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "container",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "operationId": "post_containers_restart",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            }
+        },
+        "/api/v1/lxc/containers/{container}/shutdown": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "container",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "operationId": "post_containers_shutdown",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            }
+        },
+        "/api/v1/lxc/containers/{container}/start": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "container",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "operationId": "post_containers_start",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            }
+        },
+        "/api/v1/lxc/containers/{container}/stop": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "container",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "operationId": "post_containers_stop",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            }
+        },
+        "/api/v1/lxc/containers/{container}/unfreeze": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "container",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "operationId": "post_containers_unfreeze",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            }
+        }
+    },
+    "produces": [
+        "application/json"
+    ],
+    "responses": {
+        "MaskError": {
+            "description": "When any error occurs on mask"
+        },
+        "ParseError": {
+            "description": "When a mask can't be parsed"
+        }
+    },
+    "swagger": "2.0",
+    "tags": [
+        {
+            "description": "Default namespace",
+            "name": "default"
+        },
+        {
+            "description": "Operations related to LXC",
+            "name": "api/v1/lxc/"
+        },
+        {
+            "description": "Operations related to LXC Web Panel",
+            "name": "api/v1/lwp/"
+        }
+    ]
+}
