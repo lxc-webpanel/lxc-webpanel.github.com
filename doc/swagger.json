@@ -13,6 +13,9 @@
                     "properties": {
                         "id": {
                             "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
                         }
                     },
                     "type": "object"
@@ -21,8 +24,12 @@
         },
         "AbilitiesModelPut": {
             "properties": {
-                "name": {
-                    "type": "string"
+                "roles": {
+                    "items": {
+                        "minimum": 1,
+                        "type": "integer"
+                    },
+                    "type": "array"
                 }
             },
             "type": "object"
@@ -71,6 +78,13 @@
                 },
                 "name": {
                     "type": "string"
+                },
+                "users": {
+                    "items": {
+                        "minimum": 1,
+                        "type": "integer"
+                    },
+                    "type": "array"
                 }
             },
             "type": "object"
@@ -184,6 +198,70 @@
                 ]
             }
         },
+        "/api/v1/lwp/abilities/{id}": {
+            "get": {
+                "operationId": "get_abilities",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/AbilitiesModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "put": {
+                "operationId": "put_abilities",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AbilitiesModelPut"
+                        }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/AbilitiesModel"
+                        }
+                    }
+                },
+                "tags": [
+                    "api/v1/lwp/"
+                ]
+            }
+        },
         "/api/v1/lwp/groups": {
             "get": {
                 "operationId": "get_groups_list",
@@ -231,7 +309,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModel"
+                            "$ref": "#/definitions/GroupsModel"
                         }
                     }
                 },
@@ -267,7 +345,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModel"
+                            "$ref": "#/definitions/GroupsModel"
                         }
                     }
                 },
@@ -306,7 +384,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModel"
+                            "$ref": "#/definitions/GroupsModel"
                         }
                     }
                 },
