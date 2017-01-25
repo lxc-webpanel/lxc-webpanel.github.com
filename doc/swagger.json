@@ -24,12 +24,95 @@
         },
         "AbilitiesModelPut": {
             "properties": {
-                "roles": {
+                "groups": {
                     "items": {
                         "minimum": 1,
                         "type": "integer"
                     },
                     "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "ContainerArgs": {
+            "properties": {},
+            "type": "object"
+        },
+        "ContainerstModelPost": {
+            "properties": {
+                "args": {
+                    "$ref": "#/definitions/ContainerArgs"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "template": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ContainerstModelPut": {
+            "properties": {
+                "arch": {
+                    "type": "string"
+                },
+                "cpu_shares": {
+                    "type": "integer"
+                },
+                "cpus": {
+                    "type": "string"
+                },
+                "groups": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "hostname": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "memory_limit": {
+                    "type": "integer"
+                },
+                "memory_usage": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "networks": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "pid": {
+                    "type": "integer"
+                },
+                "rootfs": {
+                    "type": "string"
+                },
+                "sorted_dict": {
+                    "type": "integer"
+                },
+                "start_auto": {
+                    "type": "integer"
+                },
+                "start_delay": {
+                    "type": "integer"
+                },
+                "start_order": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "swap_limit": {
+                    "type": "integer"
                 }
             },
             "type": "object"
@@ -89,6 +172,14 @@
             },
             "type": "object"
         },
+        "HostRebootModelPost": {
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "UsersModel": {
             "allOf": [
                 {
@@ -111,27 +202,27 @@
                 },
                 {
                     "properties": {
-                        "name": {
-                            "type": "string"
-                        },
-                        "password": {
-                            "type": "string"
-                        },
-                        "roles": {
+                        "groups": {
                             "items": {
                                 "minimum": 1,
                                 "type": "integer"
                             },
                             "type": "array"
                         },
+                        "name": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        },
                         "username": {
                             "type": "string"
                         }
                     },
                     "required": [
+                        "groups",
                         "name",
                         "password",
-                        "roles",
                         "username"
                     ],
                     "type": "object"
@@ -150,25 +241,25 @@
                 "email": {
                     "type": "string"
                 },
-                "name": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "roles": {
+                "groups": {
                     "items": {
                         "minimum": 1,
                         "type": "integer"
                     },
                     "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
                 }
             },
             "type": "object"
         }
     },
     "info": {
-        "description": "https://github.com/",
+        "description": "https://github.com/lxc-webpanel/lxc-rest",
         "title": "LXC Web Panel API documentation",
         "version": "1.0"
     },
@@ -409,6 +500,16 @@
         "/api/v1/lwp/host/reboot": {
             "post": {
                 "operationId": "post_host_reboot",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/HostRebootModelPost"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Success"
@@ -633,9 +734,21 @@
         "/api/v1/lxc/containers": {
             "get": {
                 "operationId": "get_containers_list",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ContainerstModelPut"
+                        }
                     }
                 },
                 "tags": [
@@ -644,9 +757,38 @@
             },
             "post": {
                 "operationId": "post_containers_list",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ContainerstModelPost"
+                        }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ContainerstModelPut"
+                        }
+                    },
+                    "201": {
+                        "description": "Container created"
+                    },
+                    "409": {
+                        "description": "Container already exists"
+                    },
+                    "500": {
+                        "description": "Can't create container"
                     }
                 },
                 "tags": [
@@ -654,7 +796,7 @@
                 ]
             }
         },
-        "/api/v1/lxc/containers/{container}": {
+        "/api/v1/lxc/containers/{id}": {
             "delete": {
                 "operationId": "delete_containers",
                 "responses": {
@@ -668,9 +810,21 @@
             },
             "get": {
                 "operationId": "get_containers",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ContainerstModelPut"
+                        }
                     }
                 },
                 "tags": [
@@ -680,16 +834,36 @@
             "parameters": [
                 {
                     "in": "path",
-                    "name": "container",
+                    "name": "id",
                     "required": true,
-                    "type": "string"
+                    "type": "integer"
                 }
             ],
             "put": {
                 "operationId": "put_containers",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ContainerstModelPut"
+                        }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ContainerstModelPut"
+                        }
                     }
                 },
                 "tags": [
@@ -697,13 +871,13 @@
                 ]
             }
         },
-        "/api/v1/lxc/containers/{container}/freeze": {
+        "/api/v1/lxc/containers/{id}/freeze": {
             "parameters": [
                 {
                     "in": "path",
-                    "name": "container",
+                    "name": "id",
                     "required": true,
-                    "type": "string"
+                    "type": "integer"
                 }
             ],
             "post": {
@@ -718,13 +892,13 @@
                 ]
             }
         },
-        "/api/v1/lxc/containers/{container}/restart": {
+        "/api/v1/lxc/containers/{id}/restart": {
             "parameters": [
                 {
                     "in": "path",
-                    "name": "container",
+                    "name": "id",
                     "required": true,
-                    "type": "string"
+                    "type": "integer"
                 }
             ],
             "post": {
@@ -739,13 +913,13 @@
                 ]
             }
         },
-        "/api/v1/lxc/containers/{container}/shutdown": {
+        "/api/v1/lxc/containers/{id}/shutdown": {
             "parameters": [
                 {
                     "in": "path",
-                    "name": "container",
+                    "name": "id",
                     "required": true,
-                    "type": "string"
+                    "type": "integer"
                 }
             ],
             "post": {
@@ -760,13 +934,13 @@
                 ]
             }
         },
-        "/api/v1/lxc/containers/{container}/start": {
+        "/api/v1/lxc/containers/{id}/start": {
             "parameters": [
                 {
                     "in": "path",
-                    "name": "container",
+                    "name": "id",
                     "required": true,
-                    "type": "string"
+                    "type": "integer"
                 }
             ],
             "post": {
@@ -781,13 +955,13 @@
                 ]
             }
         },
-        "/api/v1/lxc/containers/{container}/stop": {
+        "/api/v1/lxc/containers/{id}/stop": {
             "parameters": [
                 {
                     "in": "path",
-                    "name": "container",
+                    "name": "id",
                     "required": true,
-                    "type": "string"
+                    "type": "integer"
                 }
             ],
             "post": {
@@ -802,13 +976,13 @@
                 ]
             }
         },
-        "/api/v1/lxc/containers/{container}/unfreeze": {
+        "/api/v1/lxc/containers/{id}/unfreeze": {
             "parameters": [
                 {
                     "in": "path",
-                    "name": "container",
+                    "name": "id",
                     "required": true,
-                    "type": "string"
+                    "type": "integer"
                 }
             ],
             "post": {
