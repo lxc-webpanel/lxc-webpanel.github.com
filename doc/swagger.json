@@ -34,87 +34,71 @@
             },
             "type": "object"
         },
-        "ContainerArgs": {
-            "properties": {},
+        "ContainersModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ContainersModelPut"
+                },
+                {
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "pid": {
+                            "type": "integer"
+                        },
+                        "state": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "ContainersModelPost": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ContainersModelPut"
+                },
+                {
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "template": {
+                            "$ref": "#/definitions/ContainersModelTemplate"
+                        }
+                    },
+                    "required": [
+                        "name"
+                    ],
+                    "type": "object"
+                }
+            ]
+        },
+        "ContainersModelPut": {
+            "properties": {
+                "lxc": {
+                    "$ref": "#/definitions/LxcContainerConf"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
             "type": "object"
         },
-        "ContainerstModelPost": {
+        "ContainersModelTemplate": {
             "properties": {
                 "args": {
-                    "$ref": "#/definitions/ContainerArgs"
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
-                },
-                "template": {
-                    "type": "string"
                 }
             },
-            "type": "object"
-        },
-        "ContainerstModelPut": {
-            "properties": {
-                "arch": {
-                    "type": "string"
-                },
-                "cpu_shares": {
-                    "type": "integer"
-                },
-                "cpus": {
-                    "type": "string"
-                },
-                "groups": {
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": "array"
-                },
-                "hostname": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "memory_limit": {
-                    "type": "integer"
-                },
-                "memory_usage": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "networks": {
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": "array"
-                },
-                "pid": {
-                    "type": "integer"
-                },
-                "rootfs": {
-                    "type": "string"
-                },
-                "sorted_dict": {
-                    "type": "integer"
-                },
-                "start_auto": {
-                    "type": "integer"
-                },
-                "start_delay": {
-                    "type": "integer"
-                },
-                "start_order": {
-                    "type": "integer"
-                },
-                "state": {
-                    "type": "string"
-                },
-                "swap_limit": {
-                    "type": "integer"
-                }
-            },
+            "required": [
+                "name"
+            ],
             "type": "object"
         },
         "GroupsModel": {
@@ -176,6 +160,438 @@
             "properties": {
                 "message": {
                     "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LxcCap": {
+            "properties": {
+                "drop": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "keep": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "LxcCgroup": {
+            "properties": {
+                "cpu": {
+                    "$ref": "#/definitions/LxcCgroupCpu"
+                },
+                "cpuset": {
+                    "$ref": "#/definitions/LxcCgroupCpuset"
+                },
+                "memory": {
+                    "$ref": "#/definitions/LxcCgroupMemory"
+                }
+            },
+            "type": "object"
+        },
+        "LxcCgroupCpu": {
+            "properties": {
+                "shares": {
+                    "default": 1024,
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "LxcCgroupCpuset": {
+            "properties": {
+                "cpus": {
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "LxcCgroupMemory": {
+            "properties": {
+                "limit_in_bytes": {
+                    "type": "integer"
+                },
+                "memsw": {
+                    "$ref": "#/definitions/LxcCgroupMemoryMemsw"
+                }
+            },
+            "type": "object"
+        },
+        "LxcCgroupMemoryMemsw": {
+            "properties": {
+                "limit_in_bytes": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "LxcConsole": {
+            "properties": {
+                "_": {
+                    "type": "string"
+                },
+                "logfile": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LxcContainerConf": {
+            "properties": {
+                "aa_allow_incomplete": {
+                    "default": 0,
+                    "type": "integer"
+                },
+                "aa_profile": {
+                    "type": "string"
+                },
+                "arch": {
+                    "type": "string"
+                },
+                "autodev": {
+                    "default": 1,
+                    "type": "integer"
+                },
+                "cap": {
+                    "$ref": "#/definitions/LxcCap"
+                },
+                "cgroup": {
+                    "$ref": "#/definitions/LxcCgroup"
+                },
+                "console": {
+                    "$ref": "#/definitions/LxcConsole"
+                },
+                "devttydir": {
+                    "type": "string"
+                },
+                "environment": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "ephemeral": {
+                    "default": 0,
+                    "type": "integer"
+                },
+                "group": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "haltsignal": {
+                    "default": "SIGPWR",
+                    "type": "string"
+                },
+                "hook": {
+                    "$ref": "#/definitions/LxcHook"
+                },
+                "id_map": {
+                    "type": "string"
+                },
+                "include": {
+                    "type": "string"
+                },
+                "init_cmd": {
+                    "type": "string"
+                },
+                "init_gid": {
+                    "default": 0,
+                    "type": "integer"
+                },
+                "init_uid": {
+                    "default": 0,
+                    "type": "integer"
+                },
+                "kmsg": {
+                    "default": 0,
+                    "type": "integer"
+                },
+                "logfile": {
+                    "type": "string"
+                },
+                "loglevel": {
+                    "default": 5,
+                    "type": "integer"
+                },
+                "monitor": {
+                    "$ref": "#/definitions/LxcMonitor"
+                },
+                "mount": {
+                    "$ref": "#/definitions/LxcMount"
+                },
+                "network": {
+                    "items": {
+                        "$ref": "#/definitions/LxcNetwork"
+                    },
+                    "type": "array"
+                },
+                "no_new_privs": {
+                    "default": 0,
+                    "type": "integer"
+                },
+                "pts": {
+                    "type": "string"
+                },
+                "rebootsignal": {
+                    "default": "SIGINT",
+                    "type": "string"
+                },
+                "rootfs": {
+                    "$ref": "#/definitions/LxcRootfs"
+                },
+                "se_context": {
+                    "type": "string"
+                },
+                "seccomp": {
+                    "type": "string"
+                },
+                "start": {
+                    "$ref": "#/definitions/LxcStart"
+                },
+                "stopsignal": {
+                    "default": "SIGKILL",
+                    "type": "string"
+                },
+                "syslog": {
+                    "type": "string"
+                },
+                "tty": {
+                    "type": "string"
+                },
+                "utsname": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LxcHook": {
+            "properties": {
+                "autodev": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "clone": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "destroy": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "mount": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "post-stop": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "pre-mount": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "pre-start": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "start": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "stop": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "LxcMonitor": {
+            "properties": {
+                "unshare": {
+                    "default": 0,
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "LxcMount": {
+            "properties": {
+                "_": {
+                    "type": "string"
+                },
+                "auto": {
+                    "type": "string"
+                },
+                "entry": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "LxcNetwork": {
+            "properties": {
+                "flags": {
+                    "type": "string"
+                },
+                "hwaddr": {
+                    "type": "string"
+                },
+                "ipv4": {
+                    "$ref": "#/definitions/LxcNetworkIpv4"
+                },
+                "ipv6": {
+                    "$ref": "#/definitions/LxcNetworkIpv6"
+                },
+                "link": {
+                    "type": "string"
+                },
+                "macvlan": {
+                    "$ref": "#/definitions/LxcNetworkMacvlan"
+                },
+                "mtu": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "script": {
+                    "$ref": "#/definitions/LxcNetworkScript"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "veth": {
+                    "$ref": "#/definitions/LxcNetworkVeth"
+                },
+                "vlan": {
+                    "$ref": "#/definitions/LxcNetworkVlan"
+                }
+            },
+            "type": "object"
+        },
+        "LxcNetworkIpv4": {
+            "properties": {
+                "_": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "gateway": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LxcNetworkIpv6": {
+            "properties": {
+                "_": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "gateway": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LxcNetworkMacvlan": {
+            "properties": {
+                "mode": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LxcNetworkScript": {
+            "properties": {
+                "down": {
+                    "type": "string"
+                },
+                "up": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LxcNetworkVeth": {
+            "properties": {
+                "pair": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "LxcNetworkVlan": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "LxcRootfs": {
+            "properties": {
+                "_": {
+                    "type": "string"
+                },
+                "backend": {
+                    "type": "string"
+                },
+                "mount": {
+                    "type": "string"
+                },
+                "options": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LxcStart": {
+            "properties": {
+                "auto": {
+                    "default": 0,
+                    "type": "integer"
+                },
+                "delay": {
+                    "type": "integer"
+                },
+                "order": {
+                    "type": "integer"
                 }
             },
             "type": "object"
@@ -284,6 +700,7 @@
                         }
                     }
                 },
+                "summary": "Get abilities list",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -309,6 +726,7 @@
                         }
                     }
                 },
+                "summary": "Get ability",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -348,6 +766,7 @@
                         }
                     }
                 },
+                "summary": "Update ability",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -373,6 +792,7 @@
                         }
                     }
                 },
+                "summary": "Get groups list",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -404,6 +824,7 @@
                         }
                     }
                 },
+                "summary": "Create group",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -417,6 +838,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Delete group",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -440,6 +862,7 @@
                         }
                     }
                 },
+                "summary": "Get group",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -479,6 +902,7 @@
                         }
                     }
                 },
+                "summary": "Update group",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -492,6 +916,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Get host stats (uptime, cpu, ram, etc)",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -515,6 +940,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Reboot host",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -528,6 +954,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Delete me (stupid)",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -551,6 +978,7 @@
                         }
                     }
                 },
+                "summary": "Get me",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -582,6 +1010,7 @@
                         }
                     }
                 },
+                "summary": "Update me",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -607,6 +1036,7 @@
                         }
                     }
                 },
+                "summary": "Get users list",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -638,6 +1068,7 @@
                         }
                     }
                 },
+                "summary": "Create user",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -651,6 +1082,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Delete user",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -674,6 +1106,7 @@
                         }
                     }
                 },
+                "summary": "Get user",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -713,6 +1146,7 @@
                         }
                     }
                 },
+                "summary": "Update user",
                 "tags": [
                     "api/v1/lwp/"
                 ]
@@ -726,6 +1160,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Check LXC configuration (lxc-checkconfig)",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -747,10 +1182,11 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainerstModelPut"
+                            "$ref": "#/definitions/ContainersModel"
                         }
                     }
                 },
+                "summary": "Get containers list",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -763,7 +1199,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ContainerstModelPost"
+                            "$ref": "#/definitions/ContainersModelPost"
                         }
                     },
                     {
@@ -778,7 +1214,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainerstModelPut"
+                            "$ref": "#/definitions/ContainersModelPost"
                         }
                     },
                     "201": {
@@ -791,6 +1227,7 @@
                         "description": "Can't create container"
                     }
                 },
+                "summary": "Create container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -801,9 +1238,19 @@
                 "operationId": "delete_containers",
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Container destroyed"
+                    },
+                    "404": {
+                        "description": "Container doesn't exists"
+                    },
+                    "409": {
+                        "description": "Can't destroy and/or stop container"
+                    },
+                    "500": {
+                        "description": "Can't create container"
                     }
                 },
+                "summary": "Destroy container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -823,10 +1270,11 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainerstModelPut"
+                            "$ref": "#/definitions/ContainersModel"
                         }
                     }
                 },
+                "summary": "Get container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -847,7 +1295,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ContainerstModelPut"
+                            "$ref": "#/definitions/ContainersModelPut"
                         }
                     },
                     {
@@ -862,10 +1310,11 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainerstModelPut"
+                            "$ref": "#/definitions/ContainersModelPut"
                         }
                     }
                 },
+                "summary": "Update container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -887,6 +1336,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Freeze container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -908,6 +1358,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Restart container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -929,6 +1380,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Shutdown container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -950,6 +1402,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Start container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -971,6 +1424,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Stop container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
@@ -992,6 +1446,7 @@
                         "description": "Success"
                     }
                 },
+                "summary": "Unfreeze container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
