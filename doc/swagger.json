@@ -208,7 +208,7 @@
             "properties": {
                 "cpus": {
                     "items": {
-                        "type": "integer"
+                        "type": "string"
                     },
                     "type": "array"
                 }
@@ -599,7 +599,7 @@
         "UsersModel": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/UsersModelPut"
+                    "$ref": "#/definitions/UsersModelGet"
                 },
                 {
                     "properties": {
@@ -610,6 +610,35 @@
                     "type": "object"
                 }
             ]
+        },
+        "UsersModelGet": {
+            "properties": {
+                "admin": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "containers": {
+                    "items": {
+                        "minimum": 1,
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "groups": {
+                    "items": {
+                        "minimum": 1,
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
         },
         "UsersModelPost": {
             "allOf": [
@@ -646,32 +675,19 @@
             ]
         },
         "UsersModelPut": {
-            "properties": {
-                "containers": {
-                    "items": {
-                        "minimum": 1,
-                        "type": "integer"
+            "allOf": [
+                {
+                    "$ref": "#/definitions/UsersModelGet"
+                },
+                {
+                    "properties": {
+                        "password": {
+                            "type": "string"
+                        }
                     },
-                    "type": "array"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "groups": {
-                    "items": {
-                        "minimum": 1,
-                        "type": "integer"
-                    },
-                    "type": "array"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
+                    "type": "object"
                 }
-            },
-            "type": "object"
+            ]
         }
     },
     "info": {
@@ -974,7 +990,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModel"
+                            "$ref": "#/definitions/UsersModelGet"
                         }
                     }
                 },
@@ -1032,7 +1048,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModel"
+                            "$ref": "#/definitions/UsersModelGet"
                         }
                     }
                 },
@@ -1102,7 +1118,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModel"
+                            "$ref": "#/definitions/UsersModelGet"
                         }
                     }
                 },
