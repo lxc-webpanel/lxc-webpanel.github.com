@@ -4,95 +4,301 @@
         "application/json"
     ],
     "definitions": {
-        "AbilitiesModel": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/AbilitiesModelPut"
-                },
-                {
-                    "properties": {
-                        "id": {
-                            "type": "integer"
-                        },
-                        "name": {
-                            "type": "string"
-                        }
-                    },
-                    "type": "object"
-                }
-            ]
-        },
-        "AbilitiesModelPut": {
+        "AbilitiesData": {
             "properties": {
-                "groups": {
+                "data": {
                     "items": {
-                        "minimum": 1,
-                        "type": "integer"
+                        "$ref": "#/definitions/GroupsFields"
                     },
                     "type": "array"
                 }
             },
             "type": "object"
         },
-        "ContainersModel": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ContainersModelPut"
-                },
-                {
-                    "properties": {
-                        "id": {
-                            "type": "integer"
-                        },
-                        "pid": {
-                            "type": "integer"
-                        },
-                        "state": {
-                            "type": "string"
-                        }
-                    },
-                    "type": "object"
-                }
-            ]
-        },
-        "ContainersModelPost": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ContainersModelPut"
-                },
-                {
-                    "properties": {
-                        "name": {
-                            "type": "string"
-                        },
-                        "template": {
-                            "$ref": "#/definitions/ContainersModelTemplate"
-                        }
-                    },
-                    "required": [
-                        "name"
-                    ],
-                    "type": "object"
-                }
-            ]
-        },
-        "ContainersModelPut": {
+        "AbilitiesDataPost": {
             "properties": {
-                "lxc": {
-                    "$ref": "#/definitions/LxcContainerConf"
-                },
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/AbilitiesPostData"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "AbilitiesFieldsAttributes": {
+            "properties": {
                 "name": {
                     "type": "string"
                 }
             },
             "type": "object"
         },
-        "ContainersModelTemplate": {
+        "AbilitiesFieldsGet": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/AbilitiesFieldsWithRelationships"
+                },
+                {
+                    "properties": {
+                        "attributes": {
+                            "$ref": "#/definitions/AbilitiesFieldsAttributes"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "AbilitiesFieldsPut": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/AbilitiesFieldsWithRelationshipsPost"
+                },
+                {
+                    "properties": {
+                        "type": {
+                            "pattern": "abilities",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "AbilitiesFieldsWithRelationships": {
             "properties": {
-                "args": {
+                "relationships": {
+                    "$ref": "#/definitions/AbilitiesRelationships"
+                }
+            },
+            "type": "object"
+        },
+        "AbilitiesFieldsWithRelationshipsPost": {
+            "properties": {
+                "relationships": {
+                    "$ref": "#/definitions/AbilitiesRelationshipsPost"
+                }
+            },
+            "type": "object"
+        },
+        "AbilitiesPostData": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "type": {
                     "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "AbilitiesRelationships": {
+            "properties": {
+                "groups": {
+                    "$ref": "#/definitions/AbilitiesData"
+                }
+            },
+            "type": "object"
+        },
+        "AbilitiesRelationshipsPost": {
+            "properties": {
+                "groups": {
+                    "$ref": "#/definitions/AbilitiesDataPost"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersData": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/ContainersFields"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersDataPost": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/ContainersPostData"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersFields": {
+            "properties": {
+                "attributes": {
+                    "$ref": "#/definitions/ContainersFieldsAttributes"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "pattern": "containers",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersFieldsAttributes": {
+            "properties": {
+                "lxc": {
+                    "$ref": "#/definitions/LxcContainerConf"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "pid": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersFieldsAttributesPost": {
+            "properties": {
+                "lxc": {
+                    "$ref": "#/definitions/LxcContainerConf"
+                },
+                "name": {
+                    "pattern": "^(?!\\s*$).+",
+                    "type": "string"
+                },
+                "template": {
+                    "$ref": "#/definitions/ContainersTemplatePost"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "type": "object"
+        },
+        "ContainersFieldsGet": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ContainersFieldsWithRelationships"
+                },
+                {
+                    "properties": {
+                        "attributes": {
+                            "$ref": "#/definitions/ContainersFieldsAttributes"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "ContainersFieldsPost": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ContainersFieldsWithRelationshipsPost"
+                },
+                {
+                    "properties": {
+                        "attributes": {
+                            "$ref": "#/definitions/ContainersFieldsAttributesPost"
+                        },
+                        "type": {
+                            "pattern": "containers",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "ContainersFieldsPut": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ContainersFieldsWithRelationshipsPost"
+                },
+                {
+                    "properties": {
+                        "attributes": {
+                            "$ref": "#/definitions/ContainersFieldsAttributes"
+                        },
+                        "type": {
+                            "pattern": "containers",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "ContainersFieldsWithRelationships": {
+            "properties": {
+                "relationships": {
+                    "$ref": "#/definitions/ContainersRelationships"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersFieldsWithRelationshipsPost": {
+            "properties": {
+                "relationships": {
+                    "$ref": "#/definitions/ContainersRelationshipsPost"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersPostData": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "pattern": "containers",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersRelationships": {
+            "properties": {
+                "users": {
+                    "$ref": "#/definitions/ContainersData"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersRelationshipsPost": {
+            "properties": {
+                "users": {
+                    "$ref": "#/definitions/ContainersDataPost"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersTemplatePost": {
+            "properties": {
+                "args": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "pattern": "^(?!\\s*$).+",
                     "type": "string"
                 }
             },
@@ -101,57 +307,227 @@
             ],
             "type": "object"
         },
-        "GroupsModel": {
+        "GroupsData": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/GroupsFields"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsDataPost": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/GroupsPostData"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsFields": {
+            "properties": {
+                "attributes": {
+                    "$ref": "#/definitions/GroupsFieldsAttributes"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsFieldsAttributes": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsFieldsAttributesPost": {
+            "properties": {
+                "name": {
+                    "pattern": "^(?!\\s*$).+",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "type": "object"
+        },
+        "GroupsFieldsGet": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/GroupsModelPut"
+                    "$ref": "#/definitions/GroupsFieldsWithRelationships"
                 },
                 {
                     "properties": {
+                        "attributes": {
+                            "$ref": "#/definitions/GroupsFieldsAttributes"
+                        },
                         "id": {
                             "type": "integer"
-                        }
-                    },
-                    "type": "object"
-                }
-            ]
-        },
-        "GroupsModelPost": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/GroupsModelPut"
-                },
-                {
-                    "properties": {
-                        "name": {
+                        },
+                        "type": {
                             "type": "string"
                         }
                     },
-                    "required": [
-                        "name"
-                    ],
                     "type": "object"
                 }
             ]
         },
-        "GroupsModelPut": {
+        "GroupsFieldsPost": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/GroupsFieldsWithRelationshipsPost"
+                },
+                {
+                    "properties": {
+                        "attributes": {
+                            "$ref": "#/definitions/GroupsFieldsAttributesPost"
+                        },
+                        "type": {
+                            "pattern": "groups",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "GroupsFieldsPut": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/GroupsFieldsWithRelationshipsPost"
+                },
+                {
+                    "properties": {
+                        "attributes": {
+                            "$ref": "#/definitions/GroupsFieldsAttributes"
+                        },
+                        "type": {
+                            "pattern": "groups",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "GroupsFieldsWithRelationships": {
+            "properties": {
+                "relationships": {
+                    "$ref": "#/definitions/GroupsRelationships"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsFieldsWithRelationshipsPost": {
+            "properties": {
+                "relationships": {
+                    "$ref": "#/definitions/GroupsRelationshipsPost"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsPostData": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "pattern": "groups",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsRelationships": {
             "properties": {
                 "abilities": {
-                    "items": {
-                        "minimum": 1,
-                        "type": "integer"
-                    },
-                    "type": "array"
-                },
-                "name": {
-                    "type": "string"
+                    "$ref": "#/definitions/ContainersData"
                 },
                 "users": {
-                    "items": {
-                        "minimum": 1,
-                        "type": "integer"
-                    },
-                    "type": "array"
+                    "$ref": "#/definitions/GroupsData"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsRelationshipsPost": {
+            "properties": {
+                "abilities": {
+                    "$ref": "#/definitions/ContainersDataPost"
+                },
+                "users": {
+                    "$ref": "#/definitions/GroupsDataPost"
+                }
+            },
+            "type": "object"
+        },
+        "HostCpuUsage": {
+            "properties": {
+                "cores": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "usage": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "HostDiskUsage": {
+            "properties": {
+                "disk": {
+                    "type": "string"
+                },
+                "free": {
+                    "type": "integer"
+                },
+                "percent": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "used": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "HostMemoryUsage": {
+            "properties": {
+                "percent": {
+                    "type": "integer"
+                },
+                "percent_cached": {
+                    "type": "integer"
+                },
+                "swap_percent": {
+                    "type": "integer"
+                },
+                "swap_total": {
+                    "type": "integer"
+                },
+                "swap_used": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "used": {
+                    "type": "integer"
                 }
             },
             "type": "object"
@@ -160,6 +536,49 @@
             "properties": {
                 "message": {
                     "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "HostStats": {
+            "properties": {
+                "cpu": {
+                    "$ref": "#/definitions/HostCpuUsage"
+                },
+                "disk": {
+                    "$ref": "#/definitions/HostDiskUsage"
+                },
+                "dist": {
+                    "type": "string"
+                },
+                "hostname": {
+                    "type": "string"
+                },
+                "kernel": {
+                    "type": "string"
+                },
+                "memory": {
+                    "$ref": "#/definitions/HostMemoryUsage"
+                },
+                "uptime": {
+                    "$ref": "#/definitions/HostUptime"
+                }
+            },
+            "type": "object"
+        },
+        "HostUptime": {
+            "properties": {
+                "days": {
+                    "type": "integer"
+                },
+                "hours": {
+                    "type": "integer"
+                },
+                "minutes": {
+                    "type": "integer"
+                },
+                "seconds": {
+                    "type": "integer"
                 }
             },
             "type": "object"
@@ -596,98 +1015,150 @@
             },
             "type": "object"
         },
-        "UsersModel": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/UsersModelGet"
-                },
-                {
-                    "properties": {
-                        "id": {
-                            "type": "integer"
-                        }
-                    },
-                    "type": "object"
-                }
-            ]
-        },
-        "UsersModelGet": {
+        "UsersFieldsAttributes": {
             "properties": {
                 "admin": {
                     "default": false,
                     "type": "boolean"
                 },
-                "containers": {
-                    "items": {
-                        "minimum": 1,
-                        "type": "integer"
-                    },
-                    "type": "array"
-                },
                 "email": {
                     "type": "string"
                 },
-                "groups": {
-                    "items": {
-                        "minimum": 1,
-                        "type": "integer"
-                    },
-                    "type": "array"
-                },
                 "name": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             },
             "type": "object"
         },
-        "UsersModelPost": {
+        "UsersFieldsAttributesPost": {
+            "properties": {
+                "admin": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "email": {
+                    "pattern": "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)",
+                    "type": "string"
+                },
+                "name": {
+                    "pattern": "^(?!\\s*$).+",
+                    "type": "string"
+                },
+                "password": {
+                    "pattern": "^(?!\\s*$).+",
+                    "type": "string"
+                },
+                "username": {
+                    "pattern": "^(?!\\s*$).+",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "password",
+                "username"
+            ],
+            "type": "object"
+        },
+        "UsersFieldsGet": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/UsersModelPut"
+                    "$ref": "#/definitions/UsersFieldsWithRelationships"
                 },
                 {
                     "properties": {
-                        "groups": {
-                            "items": {
-                                "minimum": 1,
-                                "type": "integer"
-                            },
-                            "type": "array"
+                        "attributes": {
+                            "$ref": "#/definitions/UsersFieldsAttributes"
                         },
-                        "name": {
-                            "type": "string"
+                        "id": {
+                            "type": "integer"
                         },
-                        "password": {
-                            "type": "string"
-                        },
-                        "username": {
+                        "type": {
                             "type": "string"
                         }
                     },
-                    "required": [
-                        "groups",
-                        "name",
-                        "password",
-                        "username"
-                    ],
                     "type": "object"
                 }
             ]
         },
-        "UsersModelPut": {
+        "UsersFieldsPost": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/UsersModelGet"
+                    "$ref": "#/definitions/UsersFieldsWithRelationshipsPost"
                 },
                 {
                     "properties": {
-                        "password": {
+                        "attributes": {
+                            "$ref": "#/definitions/UsersFieldsAttributesPost"
+                        },
+                        "type": {
+                            "pattern": "users",
                             "type": "string"
                         }
                     },
                     "type": "object"
                 }
             ]
+        },
+        "UsersFieldsPut": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/UsersFieldsWithRelationshipsPost"
+                },
+                {
+                    "properties": {
+                        "attributes": {
+                            "$ref": "#/definitions/UsersFieldsAttributes"
+                        },
+                        "type": {
+                            "pattern": "users",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "UsersFieldsWithRelationships": {
+            "properties": {
+                "relationships": {
+                    "$ref": "#/definitions/UsersRelationships"
+                }
+            },
+            "type": "object"
+        },
+        "UsersFieldsWithRelationshipsPost": {
+            "properties": {
+                "relationships": {
+                    "$ref": "#/definitions/UsersRelationshipsPost"
+                }
+            },
+            "type": "object"
+        },
+        "UsersRelationships": {
+            "properties": {
+                "containers": {
+                    "$ref": "#/definitions/ContainersData"
+                },
+                "groups": {
+                    "$ref": "#/definitions/GroupsData"
+                }
+            },
+            "type": "object"
+        },
+        "UsersRelationshipsPost": {
+            "properties": {
+                "containers": {
+                    "$ref": "#/definitions/ContainersDataPost"
+                },
+                "groups": {
+                    "$ref": "#/definitions/GroupsDataPost"
+                }
+            },
+            "type": "object"
         }
     },
     "info": {
@@ -712,7 +1183,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/AbilitiesModel"
+                            "$ref": "#/definitions/AbilitiesFieldsGet"
                         }
                     }
                 },
@@ -738,7 +1209,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/AbilitiesModel"
+                            "$ref": "#/definitions/AbilitiesFieldsGet"
                         }
                     }
                 },
@@ -763,7 +1234,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/AbilitiesModelPut"
+                            "$ref": "#/definitions/AbilitiesFieldsPut"
                         }
                     },
                     {
@@ -778,7 +1249,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/AbilitiesModel"
+                            "$ref": "#/definitions/AbilitiesFieldsGet"
                         }
                     }
                 },
@@ -804,7 +1275,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GroupsModel"
+                            "$ref": "#/definitions/GroupsFieldsGet"
                         }
                     }
                 },
@@ -821,7 +1292,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/GroupsModelPost"
+                            "$ref": "#/definitions/GroupsFieldsPost"
                         }
                     },
                     {
@@ -836,7 +1307,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GroupsModel"
+                            "$ref": "#/definitions/GroupsFieldsGet"
                         }
                     }
                 },
@@ -874,7 +1345,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GroupsModel"
+                            "$ref": "#/definitions/GroupsFieldsGet"
                         }
                     }
                 },
@@ -899,7 +1370,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/GroupsModelPut"
+                            "$ref": "#/definitions/GroupsFieldsPut"
                         }
                     },
                     {
@@ -914,7 +1385,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GroupsModel"
+                            "$ref": "#/definitions/GroupsFieldsGet"
                         }
                     }
                 },
@@ -927,9 +1398,21 @@
         "/api/v1/lwp/host": {
             "get": {
                 "operationId": "get_host_stats",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/HostStats"
+                        }
                     }
                 },
                 "summary": "Get host stats (uptime, cpu, ram, etc)",
@@ -990,7 +1473,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModelGet"
+                            "$ref": "#/definitions/UsersFieldsGet"
                         }
                     }
                 },
@@ -1007,7 +1490,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UsersModelPut"
+                            "$ref": "#/definitions/UsersFieldsPut"
                         }
                     },
                     {
@@ -1022,7 +1505,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModel"
+                            "$ref": "#/definitions/UsersFieldsGet"
                         }
                     }
                 },
@@ -1048,7 +1531,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModelGet"
+                            "$ref": "#/definitions/UsersFieldsGet"
                         }
                     }
                 },
@@ -1065,7 +1548,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UsersModelPost"
+                            "$ref": "#/definitions/UsersFieldsPost"
                         }
                     },
                     {
@@ -1080,7 +1563,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModel"
+                            "$ref": "#/definitions/UsersFieldsGet"
                         }
                     }
                 },
@@ -1118,7 +1601,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModelGet"
+                            "$ref": "#/definitions/UsersFieldsGet"
                         }
                     }
                 },
@@ -1143,7 +1626,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UsersModelPut"
+                            "$ref": "#/definitions/UsersFieldsPut"
                         }
                     },
                     {
@@ -1158,7 +1641,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersModel"
+                            "$ref": "#/definitions/UsersFieldsGet"
                         }
                     }
                 },
@@ -1198,7 +1681,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainersModel"
+                            "$ref": "#/definitions/ContainersFieldsGet"
                         }
                     }
                 },
@@ -1215,7 +1698,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ContainersModelPost"
+                            "$ref": "#/definitions/ContainersFieldsPost"
                         }
                     },
                     {
@@ -1230,7 +1713,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainersModelPost"
+                            "$ref": "#/definitions/ContainersFieldsGet"
                         }
                     },
                     "201": {
@@ -1253,7 +1736,7 @@
             "delete": {
                 "operationId": "delete_containers",
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "Container destroyed"
                     },
                     "404": {
@@ -1261,9 +1744,6 @@
                     },
                     "409": {
                         "description": "Can't destroy and/or stop container"
-                    },
-                    "500": {
-                        "description": "Can't create container"
                     }
                 },
                 "summary": "Destroy container",
@@ -1286,7 +1766,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainersModel"
+                            "$ref": "#/definitions/ContainersFieldsGet"
                         }
                     }
                 },
@@ -1311,7 +1791,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ContainersModelPut"
+                            "$ref": "#/definitions/ContainersFieldsPut"
                         }
                     },
                     {
@@ -1326,7 +1806,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainersModelPut"
+                            "$ref": "#/definitions/ContainersFieldsGet"
                         }
                     }
                 },
