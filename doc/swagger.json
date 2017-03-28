@@ -949,6 +949,10 @@
                 "name": {
                     "type": "string"
                 },
+                "registered_on": {
+                    "format": "date-time",
+                    "type": "string"
+                },
                 "username": {
                     "type": "string"
                 }
@@ -983,6 +987,26 @@
                 "password",
                 "username"
             ],
+            "type": "object"
+        },
+        "UsersFieldsAttributesPut": {
+            "properties": {
+                "admin": {
+                    "type": "boolean"
+                },
+                "email": {
+                    "pattern": "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)",
+                    "type": "string"
+                },
+                "name": {
+                    "pattern": "^(?!\\s*$).+",
+                    "type": "string"
+                },
+                "password": {
+                    "pattern": "^(?!\\s*$).+",
+                    "type": "string"
+                }
+            },
             "type": "object"
         },
         "UsersFieldsGet": {
@@ -1033,7 +1057,7 @@
                 {
                     "properties": {
                         "attributes": {
-                            "$ref": "#/definitions/UsersFieldsAttributes"
+                            "$ref": "#/definitions/UsersFieldsAttributesPut"
                         },
                         "type": {
                             "pattern": "users",
