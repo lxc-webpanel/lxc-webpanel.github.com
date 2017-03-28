@@ -4,17 +4,6 @@
         "application/json"
     ],
     "definitions": {
-        "AbilitiesData": {
-            "properties": {
-                "data": {
-                    "items": {
-                        "$ref": "#/definitions/GroupsFields"
-                    },
-                    "type": "array"
-                }
-            },
-            "type": "object"
-        },
         "AbilitiesDataPost": {
             "properties": {
                 "data": {
@@ -37,7 +26,7 @@
         "AbilitiesFieldsGet": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/AbilitiesFieldsWithRelationships"
+                    "$ref": "#/definitions/AbilitiesFieldsWithRelationshipsPost"
                 },
                 {
                     "properties": {
@@ -71,14 +60,6 @@
                 }
             ]
         },
-        "AbilitiesFieldsWithRelationships": {
-            "properties": {
-                "relationships": {
-                    "$ref": "#/definitions/AbilitiesRelationships"
-                }
-            },
-            "type": "object"
-        },
         "AbilitiesFieldsWithRelationshipsPost": {
             "properties": {
                 "relationships": {
@@ -98,29 +79,10 @@
             },
             "type": "object"
         },
-        "AbilitiesRelationships": {
-            "properties": {
-                "groups": {
-                    "$ref": "#/definitions/AbilitiesData"
-                }
-            },
-            "type": "object"
-        },
         "AbilitiesRelationshipsPost": {
             "properties": {
                 "groups": {
                     "$ref": "#/definitions/AbilitiesDataPost"
-                }
-            },
-            "type": "object"
-        },
-        "ContainersData": {
-            "properties": {
-                "data": {
-                    "items": {
-                        "$ref": "#/definitions/ContainersFields"
-                    },
-                    "type": "array"
                 }
             },
             "type": "object"
@@ -132,21 +94,6 @@
                         "$ref": "#/definitions/ContainersPostData"
                     },
                     "type": "array"
-                }
-            },
-            "type": "object"
-        },
-        "ContainersFields": {
-            "properties": {
-                "attributes": {
-                    "$ref": "#/definitions/ContainersFieldsAttributes"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "type": {
-                    "pattern": "containers",
-                    "type": "string"
                 }
             },
             "type": "object"
@@ -189,7 +136,7 @@
         "ContainersFieldsGet": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/ContainersFieldsWithRelationships"
+                    "$ref": "#/definitions/ContainersFieldsWithRelationshipsPost"
                 },
                 {
                     "properties": {
@@ -245,14 +192,6 @@
                 }
             ]
         },
-        "ContainersFieldsWithRelationships": {
-            "properties": {
-                "relationships": {
-                    "$ref": "#/definitions/ContainersRelationships"
-                }
-            },
-            "type": "object"
-        },
         "ContainersFieldsWithRelationshipsPost": {
             "properties": {
                 "relationships": {
@@ -267,16 +206,8 @@
                     "type": "integer"
                 },
                 "type": {
-                    "pattern": "containers",
+                    "pattern": "users",
                     "type": "string"
-                }
-            },
-            "type": "object"
-        },
-        "ContainersRelationships": {
-            "properties": {
-                "users": {
-                    "$ref": "#/definitions/ContainersData"
                 }
             },
             "type": "object"
@@ -307,17 +238,6 @@
             ],
             "type": "object"
         },
-        "GroupsData": {
-            "properties": {
-                "data": {
-                    "items": {
-                        "$ref": "#/definitions/GroupsFields"
-                    },
-                    "type": "array"
-                }
-            },
-            "type": "object"
-        },
         "GroupsDataPost": {
             "properties": {
                 "data": {
@@ -325,20 +245,6 @@
                         "$ref": "#/definitions/GroupsPostData"
                     },
                     "type": "array"
-                }
-            },
-            "type": "object"
-        },
-        "GroupsFields": {
-            "properties": {
-                "attributes": {
-                    "$ref": "#/definitions/GroupsFieldsAttributes"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "type": {
-                    "type": "string"
                 }
             },
             "type": "object"
@@ -366,7 +272,7 @@
         "GroupsFieldsGet": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/GroupsFieldsWithRelationships"
+                    "$ref": "#/definitions/GroupsFieldsWithRelationshipsPost"
                 },
                 {
                     "properties": {
@@ -422,14 +328,6 @@
                 }
             ]
         },
-        "GroupsFieldsWithRelationships": {
-            "properties": {
-                "relationships": {
-                    "$ref": "#/definitions/GroupsRelationships"
-                }
-            },
-            "type": "object"
-        },
         "GroupsFieldsWithRelationshipsPost": {
             "properties": {
                 "relationships": {
@@ -444,19 +342,7 @@
                     "type": "integer"
                 },
                 "type": {
-                    "pattern": "groups",
                     "type": "string"
-                }
-            },
-            "type": "object"
-        },
-        "GroupsRelationships": {
-            "properties": {
-                "abilities": {
-                    "$ref": "#/definitions/ContainersData"
-                },
-                "users": {
-                    "$ref": "#/definitions/GroupsData"
                 }
             },
             "type": "object"
@@ -474,28 +360,48 @@
         },
         "HostCpuUsage": {
             "properties": {
-                "cores": {
-                    "type": "string"
+                "logical": {
+                    "type": "integer"
                 },
                 "model": {
                     "type": "string"
                 },
-                "usage": {
+                "physical": {
                     "type": "integer"
+                },
+                "usage": {
+                    "type": "number"
                 }
             },
             "type": "object"
         },
         "HostDiskUsage": {
             "properties": {
-                "disk": {
+                "free": {
+                    "type": "integer"
+                },
+                "name": {
                     "type": "string"
                 },
+                "percent": {
+                    "type": "number"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "used": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "HostMemorySwap": {
+            "properties": {
                 "free": {
                     "type": "integer"
                 },
                 "percent": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "total": {
                     "type": "integer"
@@ -508,20 +414,22 @@
         },
         "HostMemoryUsage": {
             "properties": {
+                "swap": {
+                    "$ref": "#/definitions/HostMemorySwap"
+                },
+                "virtual": {
+                    "$ref": "#/definitions/HostMemoryVirtual"
+                }
+            },
+            "type": "object"
+        },
+        "HostMemoryVirtual": {
+            "properties": {
+                "free": {
+                    "type": "integer"
+                },
                 "percent": {
-                    "type": "integer"
-                },
-                "percent_cached": {
-                    "type": "integer"
-                },
-                "swap_percent": {
-                    "type": "integer"
-                },
-                "swap_total": {
-                    "type": "integer"
-                },
-                "swap_used": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "total": {
                     "type": "integer"
@@ -546,9 +454,12 @@
                     "$ref": "#/definitions/HostCpuUsage"
                 },
                 "disk": {
-                    "$ref": "#/definitions/HostDiskUsage"
+                    "items": {
+                        "$ref": "#/definitions/HostDiskUsage"
+                    },
+                    "type": "array"
                 },
-                "dist": {
+                "distrib": {
                     "type": "string"
                 },
                 "hostname": {
@@ -562,6 +473,17 @@
                 },
                 "uptime": {
                     "$ref": "#/definitions/HostUptime"
+                }
+            },
+            "type": "object"
+        },
+        "HostStatsFieldsGet": {
+            "properties": {
+                "attributes": {
+                    "$ref": "#/definitions/HostStats"
+                },
+                "type": {
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -1066,7 +988,7 @@
         "UsersFieldsGet": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/UsersFieldsWithRelationships"
+                    "$ref": "#/definitions/UsersFieldsWithRelationshipsPost"
                 },
                 {
                     "properties": {
@@ -1122,29 +1044,10 @@
                 }
             ]
         },
-        "UsersFieldsWithRelationships": {
-            "properties": {
-                "relationships": {
-                    "$ref": "#/definitions/UsersRelationships"
-                }
-            },
-            "type": "object"
-        },
         "UsersFieldsWithRelationshipsPost": {
             "properties": {
                 "relationships": {
                     "$ref": "#/definitions/UsersRelationshipsPost"
-                }
-            },
-            "type": "object"
-        },
-        "UsersRelationships": {
-            "properties": {
-                "containers": {
-                    "$ref": "#/definitions/ContainersData"
-                },
-                "groups": {
-                    "$ref": "#/definitions/GroupsData"
                 }
             },
             "type": "object"
@@ -1411,7 +1314,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/HostStats"
+                            "$ref": "#/definitions/HostStatsFieldsGet"
                         }
                     }
                 },
