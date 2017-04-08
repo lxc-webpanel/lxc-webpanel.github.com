@@ -87,6 +87,26 @@
             },
             "type": "object"
         },
+        "ContainersClone": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersClonePost": {
+            "properties": {
+                "attributes": {
+                    "$ref": "#/definitions/ContainersClone"
+                },
+                "type": {
+                    "pattern": "containers",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "ContainersDataPost": {
             "properties": {
                 "data": {
@@ -1627,22 +1647,9 @@
                         "schema": {
                             "$ref": "#/definitions/ContainersFieldsPost"
                         }
-                    },
-                    {
-                        "description": "An optional fields mask",
-                        "format": "mask",
-                        "in": "header",
-                        "name": "X-Fields",
-                        "type": "string"
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/ContainersFieldsGet"
-                        }
-                    },
                     "201": {
                         "description": "Container created"
                     },
@@ -1720,24 +1727,46 @@
                         "schema": {
                             "$ref": "#/definitions/ContainersFieldsPut"
                         }
-                    },
-                    {
-                        "description": "An optional fields mask",
-                        "format": "mask",
-                        "in": "header",
-                        "name": "X-Fields",
-                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/ContainersFieldsGet"
-                        }
+                        "description": "Success"
                     }
                 },
                 "summary": "Update container",
+                "tags": [
+                    "api/v1/lxc/"
+                ]
+            }
+        },
+        "/api/v1/lxc/containers/{id}/clone": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "post": {
+                "operationId": "post_containers_clone",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ContainersClonePost"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "Clone container",
                 "tags": [
                     "api/v1/lxc/"
                 ]
