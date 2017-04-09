@@ -87,6 +87,22 @@
             },
             "type": "object"
         },
+        "AbilitiesRootGet": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/AbilitiesFieldsGet"
+                }
+            },
+            "type": "object"
+        },
+        "AbilitiesRootPut": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/AbilitiesFieldsPut"
+                }
+            },
+            "type": "object"
+        },
         "ContainersClone": {
             "properties": {
                 "name": {
@@ -103,6 +119,14 @@
                 "type": {
                     "pattern": "containers",
                     "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersCloneRootPost": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/ContainersClonePost"
                 }
             },
             "type": "object"
@@ -236,6 +260,30 @@
             "properties": {
                 "users": {
                     "$ref": "#/definitions/ContainersDataPost"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersRootGet": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/ContainersFieldsGet"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersRootPost": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/ContainersFieldsPost"
+                }
+            },
+            "type": "object"
+        },
+        "ContainersRootPut": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/ContainersFieldsPut"
                 }
             },
             "type": "object"
@@ -378,6 +426,30 @@
             },
             "type": "object"
         },
+        "GroupsRootGet": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/GroupsFieldsGet"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsRootPost": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/GroupsFieldsPost"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsRootPut": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/GroupsFieldsPut"
+                }
+            },
+            "type": "object"
+        },
         "HostCpuUsage": {
             "properties": {
                 "logical": {
@@ -504,6 +576,14 @@
                 },
                 "type": {
                     "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "HostStatsRootGet": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/HostStatsFieldsGet"
                 }
             },
             "type": "object"
@@ -1106,6 +1186,30 @@
                 }
             },
             "type": "object"
+        },
+        "UsersRootGet": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/UsersFieldsGet"
+                }
+            },
+            "type": "object"
+        },
+        "UsersRootPost": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/UsersFieldsPost"
+                }
+            },
+            "type": "object"
+        },
+        "UsersRootPut": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/UsersFieldsPut"
+                }
+            },
+            "type": "object"
         }
     },
     "info": {
@@ -1130,7 +1234,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/AbilitiesFieldsGet"
+                            "$ref": "#/definitions/AbilitiesRootGet"
                         }
                     }
                 },
@@ -1156,7 +1260,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/AbilitiesFieldsGet"
+                            "$ref": "#/definitions/AbilitiesRootGet"
                         }
                     }
                 },
@@ -1181,7 +1285,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/AbilitiesFieldsPut"
+                            "$ref": "#/definitions/AbilitiesRootPut"
                         }
                     },
                     {
@@ -1196,7 +1300,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/AbilitiesFieldsGet"
+                            "$ref": "#/definitions/AbilitiesRootGet"
                         }
                     }
                 },
@@ -1222,7 +1326,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GroupsFieldsGet"
+                            "$ref": "#/definitions/GroupsRootGet"
                         }
                     }
                 },
@@ -1239,7 +1343,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/GroupsFieldsPost"
+                            "$ref": "#/definitions/GroupsRootPost"
                         }
                     },
                     {
@@ -1254,7 +1358,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GroupsFieldsGet"
+                            "$ref": "#/definitions/GroupsRootGet"
                         }
                     }
                 },
@@ -1292,7 +1396,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GroupsFieldsGet"
+                            "$ref": "#/definitions/GroupsRootGet"
                         }
                     }
                 },
@@ -1317,7 +1421,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/GroupsFieldsPut"
+                            "$ref": "#/definitions/GroupsRootPut"
                         }
                     },
                     {
@@ -1332,7 +1436,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GroupsFieldsGet"
+                            "$ref": "#/definitions/GroupsRootGet"
                         }
                     }
                 },
@@ -1358,7 +1462,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/HostStatsFieldsGet"
+                            "$ref": "#/definitions/HostStatsRootGet"
                         }
                     }
                 },
@@ -1420,7 +1524,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersFieldsGet"
+                            "$ref": "#/definitions/UsersRootGet"
                         }
                     }
                 },
@@ -1437,7 +1541,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UsersFieldsPut"
+                            "$ref": "#/definitions/UsersRootPut"
                         }
                     },
                     {
@@ -1452,7 +1556,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersFieldsGet"
+                            "$ref": "#/definitions/UsersRootGet"
                         }
                     }
                 },
@@ -1478,7 +1582,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersFieldsGet"
+                            "$ref": "#/definitions/UsersRootGet"
                         }
                     }
                 },
@@ -1495,7 +1599,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UsersFieldsPost"
+                            "$ref": "#/definitions/UsersRootPost"
                         }
                     },
                     {
@@ -1510,7 +1614,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersFieldsGet"
+                            "$ref": "#/definitions/UsersRootGet"
                         }
                     }
                 },
@@ -1548,7 +1652,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersFieldsGet"
+                            "$ref": "#/definitions/UsersRootGet"
                         }
                     }
                 },
@@ -1573,7 +1677,7 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UsersFieldsPut"
+                            "$ref": "#/definitions/UsersRootPut"
                         }
                     },
                     {
@@ -1588,7 +1692,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersFieldsGet"
+                            "$ref": "#/definitions/UsersRootGet"
                         }
                     }
                 },
@@ -1628,7 +1732,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainersFieldsGet"
+                            "$ref": "#/definitions/ContainersRootGet"
                         }
                     }
                 },
@@ -1645,11 +1749,24 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ContainersFieldsPost"
+                            "$ref": "#/definitions/ContainersRootPost"
                         }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ContainersRootGet"
+                        }
+                    },
                     "201": {
                         "description": "Container created"
                     },
@@ -1700,7 +1817,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainersFieldsGet"
+                            "$ref": "#/definitions/ContainersRootGet"
                         }
                     }
                 },
@@ -1725,13 +1842,23 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ContainersFieldsPut"
+                            "$ref": "#/definitions/ContainersRootPut"
                         }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ContainersRootGet"
+                        }
                     }
                 },
                 "summary": "Update container",
@@ -1757,13 +1884,23 @@
                         "name": "payload",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ContainersClonePost"
+                            "$ref": "#/definitions/ContainersCloneRootPost"
                         }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ContainersRootGet"
+                        }
                     }
                 },
                 "summary": "Clone container",
