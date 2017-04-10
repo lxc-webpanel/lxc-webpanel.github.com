@@ -95,6 +95,17 @@
             },
             "type": "object"
         },
+        "AbilitiesRootGetMany": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/AbilitiesFieldsGet"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
         "AbilitiesRootPut": {
             "properties": {
                 "data": {
@@ -272,6 +283,17 @@
             },
             "type": "object"
         },
+        "ContainersRootGetMany": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/ContainersFieldsGet"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
         "ContainersRootPost": {
             "properties": {
                 "data": {
@@ -430,6 +452,17 @@
             "properties": {
                 "data": {
                     "$ref": "#/definitions/GroupsFieldsGet"
+                }
+            },
+            "type": "object"
+        },
+        "GroupsRootGetMany": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/GroupsFieldsGet"
+                    },
+                    "type": "array"
                 }
             },
             "type": "object"
@@ -1195,6 +1228,17 @@
             },
             "type": "object"
         },
+        "UsersRootGetMany": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/UsersFieldsGet"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
         "UsersRootPost": {
             "properties": {
                 "data": {
@@ -1234,7 +1278,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/AbilitiesRootGet"
+                            "$ref": "#/definitions/AbilitiesRootGetMany"
                         }
                     }
                 },
@@ -1326,7 +1370,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GroupsRootGet"
+                            "$ref": "#/definitions/GroupsRootGetMany"
                         }
                     }
                 },
@@ -1582,7 +1626,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/UsersRootGet"
+                            "$ref": "#/definitions/UsersRootGetMany"
                         }
                     }
                 },
@@ -1732,7 +1776,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/ContainersRootGet"
+                            "$ref": "#/definitions/ContainersRootGetMany"
                         }
                     }
                 },
