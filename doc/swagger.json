@@ -114,6 +114,29 @@
             },
             "type": "object"
         },
+        "AuthGet": {
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "AuthPost": {
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "password",
+                "username"
+            ],
+            "type": "object"
+        },
         "ContainersClone": {
             "properties": {
                 "name": {
@@ -1258,10 +1281,93 @@
     },
     "info": {
         "description": "https://github.com/lxc-webpanel/lxc-rest",
+        "license": {
+            "name": "MIT"
+        },
         "title": "LXC Web Panel API documentation",
         "version": "1.0"
     },
     "paths": {
+        "/api/v1/auth": {
+            "post": {
+                "operationId": "post_auth",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "payload",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AuthPost"
+                        }
+                    },
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/AuthGet"
+                        }
+                    }
+                },
+                "summary": "Get Json Web Token",
+                "tags": [
+                    "api/v1/"
+                ]
+            }
+        },
+        "/api/v1/auth/check": {
+            "get": {
+                "operationId": "get_auth_check",
+                "responses": {
+                    "200": {
+                        "description": "Token OK"
+                    },
+                    "401": {
+                        "description": "Token invalid or expired"
+                    },
+                    "422": {
+                        "description": "Signature verification failed"
+                    }
+                },
+                "summary": "Check token",
+                "tags": [
+                    "api/v1/"
+                ]
+            }
+        },
+        "/api/v1/auth/refresh": {
+            "post": {
+                "operationId": "post_auth_refresh",
+                "parameters": [
+                    {
+                        "description": "An optional fields mask",
+                        "format": "mask",
+                        "in": "header",
+                        "name": "X-Fields",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/AuthGet"
+                        }
+                    }
+                },
+                "summary": "Get new token with valid token",
+                "tags": [
+                    "api/v1/"
+                ]
+            }
+        },
         "/api/v1/lwp/abilities": {
             "get": {
                 "operationId": "get_abilities_list",
@@ -2102,6 +2208,10 @@
         {
             "description": "Default namespace",
             "name": "default"
+        },
+        {
+            "description": "Authentication",
+            "name": "api/v1/"
         },
         {
             "description": "Operations related to LXC",
